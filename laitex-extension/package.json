@@ -1,0 +1,50 @@
+{
+  "name": "laitex-extension",
+  "displayName": "Laitex",
+  "description": "LLM-powered LaTeX assistant for research papers",
+  "version": "0.0.1",
+  "publisher": "your-name-or-org",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "laitex.openChat",
+        "title": "Laitex: Open Chat Panel"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "laitexSidebar",
+          "title": "Laitex",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "laitexSidebar": [
+        {
+          "id": "laitexChatView",
+          "name": "Laitex Chat"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3",
+    "vsce": "^2.20.0"
+  }
+}

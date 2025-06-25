@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>RAG Query Interface</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #response {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    .answer {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sources {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .source {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+
+    .loading {
+      display: none;
+      margin: 20px 0;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>RAG Query Interface</h1>
+    <textarea id="query" placeholder="Enter your question..."></textarea>
+    <button onclick="askEndpoint()">Ask</button>
+    <div id="loading" class="loading">Processing your question...</div>
+    <div id="response"></div>
+  </div>
+
+  <script>
+    async function askEndpoint() {
+      const query = document.getElementById('query').value;
+      const loading = document.getElementById('loading');
+      const response = document.getElementById('response');
+
+      if (!query.trim()) {
+        alert('Please enter a question');
+        return;
+      }
+
+      loading.style.display = 'block';
+      response.innerHTML = '';
+
+      try {
+        const result = await fetch('/api/ask', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: query,
+            k: 3
+          })
+        });
+
+        const data = await result.json();
+        console.log('API Response:', data); // Debug log
+
+        let html = '';
+
+        if (data.answer) {
+          html += `<div class="answer">${data.answer}</div>`;
+        }
+
+        if (data.sources && Array.isArray(data.sources)) {
+          html += '<div class="sources"><h3>Sources:</h3>';
+          data.sources.forEach((source, index) => {
+            if (source) {
+              html += `
+                            <div class="source">
+                                <strong>Source ${index + 1}:</strong><br>
+                                ${source.arxiv_id ? `arXiv ID: ${source.arxiv_id}<br>` : ''}
+                                ${source.source_url ? `URL: <a href="https://arxiv.org/abs/${source.arxiv_id}" target="_blank">https://arxiv.org/abs/${source.source_url}</a>` : ''}
+                            </div>
+                        `;
+            }
+          });
+          html += '</div>';
+        }
+
+        response.innerHTML = html;
+      } catch (error) {
+        response.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+      } finally {
+        loading.style.display = 'none';
+      }
+    }
+
+    // Allow Enter key to submit
+    document.getElementById('query').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        askEndpoint();
+      }
+    });
+  </script>
+</body>
+
+</html>
