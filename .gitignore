@@ -76,4 +76,7 @@ env.bak/
 venv.bak/
 
 # ChromaDB
-chroma_db/ 
+chroma_db/
+
+# Papers folder (local only)
+rag/papers/ 
