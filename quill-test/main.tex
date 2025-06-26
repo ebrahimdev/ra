@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{cite}
+
+\title{Exploring Curriculum Learning in Neural Networks}
+\author{Jane Doe}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Curriculum learning is an approach where models are trained on samples in a meaningful order, typically from easy to hard. This paper explores how curriculum strategies affect convergence speed and generalization in deep learning.
+\end{abstract}
+ 
+\section{Introduction}
+
+Deep learning models are typically trained with randomly ordered samples. However, humans and animals learn more effectively when examples are presented in a meaningful sequence. This motivates the idea of curriculum learning.
+
+\section{Related Work}
+
+\cite{bengio2009curriculum} introduced curriculum learning as a formal training paradigm. Several follow-up studies have investigated automatic curriculum generation and self-paced learning.
+
+\section{Methodology}
+
+We propose a curriculum scheduler that ranks training samples based on uncertainty. The curriculum is dynamically updated every epoch based on model predictions.
+
+\section{Experiments}
+
+We evaluate on MNIST, CIFAR-10, and a synthetic toy dataset. Metrics include convergence speed, final accuracy, and robustness to noise.
+
+\section{Conclusion}
+
+Curriculum learning improves convergence and generalization across multiple datasets. Future work includes curriculum design for reinforcement learning tasks.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+everytime you add a dependency make sure it's added to the proper file like requirements or gemfile etc. 
+
+everytime you add a new file make sure you you put it in the proper directory.
+
+evertime you are making architectural changes, ask the user before executing the changes.
+
+always try to implement the simplest form for any code update. avoid using multiple cascading if and elses. just stick to major part and keep it as simple as possible. 

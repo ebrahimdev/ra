@@ -7,7 +7,7 @@ function App() {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const url = tabs[0].url;
 
-      fetch('http://localhost:3000/api/ingest', {
+      fetch('http://localhost:8001/api/v1/ingest_paper', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url, user_id: 'user_123' })

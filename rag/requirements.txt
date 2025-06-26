@@ -1,7 +1,31 @@
+# Core FastAPI dependencies
 fastapi
-uvicorn
-sentence-transformers
+uvicorn[standard]
+pydantic
+
+# Vector database and embeddings
+chromadb
+
+# PDF processing
 arxiv
 pdfminer.six
-chromadb
+
+# LLM and AI
+langchain
+langchain-community
+langchain-core
 tiktoken
+torch
+sentence-transformers
+huggingface_hub<0.20.0
+
+# HTTP requests
+requests
+
+# Utilities
+numpy<2.0.0
+python-multipart
+
+# Database
+SQLAlchemy
+aiosqlite 
