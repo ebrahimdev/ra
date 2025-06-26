@@ -11,11 +11,28 @@
     "Other"
   ],
   "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:laitex.openChat",
+    "onCommand:laitex.inlineChat",
+    "onLanguage:latex"
+  ],
   "contributes": {
     "commands": [
       {
         "command": "laitex.openChat",
         "title": "Laitex: Open Chat Panel"
+      },
+      {
+        "command": "laitex.inlineChat",
+        "title": "Laitex: Inline Chat",
+        "when": "editorTextFocus && editorLangId == latex"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "laitex.inlineChat",
+        "key": "cmd+k",
+        "when": "editorTextFocus && editorLangId == latex"
       }
     ],
     "viewsContainers": {
@@ -45,6 +62,6 @@
   "devDependencies": {
     "@types/vscode": "^1.85.0",
     "typescript": "^5.3.3",
-    "vsce": "^2.20.0"
+    "vsce": "^2.15.0"
   }
 }

@@ -4,9 +4,6 @@ This monorepo contains multiple services and applications:
 
 ## Services
 
-### Core (`/core`)
-Rails application - the main backend service
-
 ### Extension (`/extension`)
 React/Vite frontend application
 

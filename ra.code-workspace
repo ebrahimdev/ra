@@ -1,0 +1,72 @@
+{
+  "folders": [
+    {
+      "name": "RAG Server",
+      "path": "./rag"
+    },
+    {
+      "name": "Laitex Extension",
+      "path": "./laitex-extension"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.git": true
+    }
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Launch Extension",
+        "type": "extensionHost",
+        "request": "launch",
+        "args": [
+          "--extensionDevelopmentPath=${workspaceFolder}/laitex-extension"
+        ],
+        "outFiles": [
+          "${workspaceFolder}/laitex-extension/dist/**/*.js"
+        ],
+        "preLaunchTask": "build-extension"
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "build-extension",
+        "type": "npm",
+        "script": "build",
+        "group": "build",
+        "options": {
+          "cwd": "${workspaceFolder}/laitex-extension"
+        },
+        "presentation": {
+          "panel": "shared",
+          "reveal": "silent"
+        },
+        "problemMatcher": "$tsc"
+      },
+      {
+        "label": "start-rag-server",
+        "type": "shell",
+        "command": "python3",
+        "args": [
+          "main.py"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}/rag"
+        },
+        "group": "build",
+        "presentation": {
+          "panel": "new",
+          "reveal": "always"
+        },
+        "isBackground": true
+      }
+    ]
+  }
+}
