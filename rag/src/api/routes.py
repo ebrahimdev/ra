@@ -222,12 +222,26 @@ async def suggest_citation(req: CitationSuggestionRequest):
         if top_score >= 0.8:
             metadata = best_match["metadata"]
             
+            # Extract and truncate the matching text snippet
+            match_text = best_match["text"]
+            if len(match_text) > 300:
+                # Truncate to ~300 characters, trying to break at a word boundary
+                truncated = match_text[:300]
+                last_space = truncated.rfind(' ')
+                if last_space > 250:  # Only use word boundary if it's not too far back
+                    match_snippet = truncated[:last_space] + "..."
+                else:
+                    match_snippet = truncated + "..."
+            else:
+                match_snippet = match_text
+            
             # Extract paper information from metadata
             paper_info = {
                 "title": metadata.get("title", "Unknown Title"),
                 "authors": metadata.get("authors", "Unknown Authors"),
                 "citation_key": metadata.get("citation_key", "unknown"),
-                "bibtex": metadata.get("bibtex", "")
+                "bibtex": metadata.get("bibtex", ""),
+                "match_snippet": match_snippet
             }
             
             return CitationSuggestionResponse(

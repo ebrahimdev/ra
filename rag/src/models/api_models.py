@@ -115,6 +115,7 @@ class PaperInfo(BaseModel):
     authors: str
     citation_key: str
     bibtex: str
+    match_snippet: Optional[str] = None
 
 class CitationSuggestionResponse(BaseModel):
     match: bool
