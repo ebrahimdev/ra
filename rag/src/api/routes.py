@@ -201,7 +201,10 @@ async def suggest_citation(req: CitationSuggestionRequest):
     """Suggest a citation for the given text by finding the most similar paper chunk."""
     try:
         logger.info(f"=== Citation Suggestion Request ===")
-        logger.info(f"Text: {req.text[:100]}...")  # Log first 100 chars
+        logger.info(f"Request body: {req.dict()}")
+        logger.info(f"Full text: {req.text}")
+        logger.info(f"Text length: {len(req.text)} characters")
+        logger.info(f"=== End Citation Suggestion Request ===")
         
         # Search for similar chunks in fine collection (top 3)
         search_results = vector_store.search_collection(req.text, k=3, collection_name="fine")
@@ -244,17 +247,38 @@ async def suggest_citation(req: CitationSuggestionRequest):
                 "match_snippet": match_snippet
             }
             
-            return CitationSuggestionResponse(
+            response = CitationSuggestionResponse(
                 match=True,
                 score=top_score,
                 paper=paper_info
             )
+            
+            logger.info(f"=== Citation Suggestion Response ===")
+            logger.info(f"Response: {response.dict()}")
+            logger.info(f"Match: {response.match}")
+            logger.info(f"Score: {response.score}")
+            if response.paper:
+                logger.info(f"Paper title: {response.paper.title}")
+                logger.info(f"Paper authors: {response.paper.authors}")
+                logger.info(f"Citation key: {response.paper.citation_key}")
+                logger.info(f"Match snippet: {response.paper.match_snippet}")
+            logger.info(f"=== End Citation Suggestion Response ===")
+            
+            return response
         else:
-            return CitationSuggestionResponse(
+            response = CitationSuggestionResponse(
                 match=False,
                 score=top_score,
                 paper=None
             )
+            
+            logger.info(f"=== Citation Suggestion Response ===")
+            logger.info(f"Response: {response.dict()}")
+            logger.info(f"Match: {response.match}")
+            logger.info(f"Score: {response.score} (below threshold 0.8)")
+            logger.info(f"=== End Citation Suggestion Response ===")
+            
+            return response
         
     except Exception as e:
         logger.error(f"Error in suggest_citation endpoint: {str(e)}")
