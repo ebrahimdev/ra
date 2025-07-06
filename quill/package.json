@@ -2,7 +2,7 @@
   "name": "quill",
   "displayName": "quill",
   "description": "An intelligent research assistant that helps academic writers brainstorm, summarize, and generate structured papers directly inside VS Code.",
-  "version": "0.0.1",
+  "version": "0.0.28",
   "publisher": "quill-dev",
   "engines": {
     "vscode": "^1.96.0"
@@ -10,7 +10,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:latex"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -21,6 +23,14 @@
       {
         "command": "quill.suggestCitation",
         "title": "Quill: Suggest Citation"
+      },
+      {
+        "command": "quill.toggleProactiveSuggestions",
+        "title": "Quill: Toggle Proactive Citation Suggestions"
+      },
+      {
+        "command": "quill.clearCitationTracking",
+        "title": "Quill: Clear Citation Tracking"
       }
     ],
     "keybindings": [
@@ -37,8 +47,33 @@
           "command": "quill.suggestCitation",
           "group": "navigation",
           "when": "editorLangId == latex"
+        },
+        {
+          "command": "quill.toggleProactiveSuggestions",
+          "group": "navigation",
+          "when": "editorLangId == latex"
         }
       ]
+    },
+    "configuration": {
+      "title": "Quill",
+      "properties": {
+        "quill.proactiveSuggestions.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable proactive citation suggestions while typing"
+        },
+        "quill.proactiveSuggestions.cooldownMs": {
+          "type": "number",
+          "default": 8000,
+          "description": "Cooldown period between citation suggestions (in milliseconds)"
+        },
+        "quill.proactiveSuggestions.wordThreshold": {
+          "type": "number",
+          "default": 200,
+          "description": "Number of words to type before triggering a citation check"
+        }
+      }
     }
   },
   "scripts": {

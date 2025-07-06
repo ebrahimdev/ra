@@ -10,3 +10,5 @@ everytime you add a new file make sure you you put it in the proper directory.
 evertime you are making architectural changes, ask the user before executing the changes.
 
 always try to implement the simplest form for any code update. avoid using multiple cascading if and elses. just stick to major part and keep it as simple as possible. 
+
+in each iteration you are only allowed to modify two files at a time. use this wisely and desgin things simply instead of overengineering them.

@@ -222,7 +222,7 @@ async def suggest_citation(req: CitationSuggestionRequest):
         top_score = best_match["similarity_score"]
         
         # Check if similarity score is above threshold (0.8)
-        if top_score >= 0.8:
+        if top_score >= 0.7:
             metadata = best_match["metadata"]
             
             # Extract and truncate the matching text snippet

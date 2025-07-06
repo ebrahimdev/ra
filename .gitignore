@@ -80,3 +80,15 @@ chroma_db/
 
 # Papers folder (local only)
 rag/papers/ 
+
+
+#bibtex
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.pdf
+*.synctex.gz
